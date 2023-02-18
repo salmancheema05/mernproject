@@ -1,0 +1,11 @@
+.grobleBgColor{
+    background-color: #757ce8;
+    color: white;
+}
+.grobleColor{
+    color: #757ce8;
+}
+.signupcontainer{
+    background-image:linear-gradient(#757ce8,#928FD3);
+    height: 100vh;
+}
