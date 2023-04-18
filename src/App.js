@@ -1,9 +1,9 @@
-import React, { useState, useEffect} from 'react'
+import React, { useContext , useState, useEffect} from 'react'
 import Home from './Home'
 import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";  
 import Dashboard from './userpages/dashboardpage/Dashboard';
-import Login from './commoncomponens/Login';
-import SignUpPage from './commoncomponens/SignUpPage';
+import Login from './commoncomponents/Login';
+import SignUpPage from './commoncomponents/SignUpPage';
 import UserLoginProtect from './protectRouts/UserLoginProtect';
 import UserNotLogin from './protectRouts/UserNotLogin'
 import ProfessorTotalStudent  from './userpages/dashboardpage/components/TotalStudent'
@@ -14,14 +14,31 @@ import Setting from './userpages/Setting';
 import ClassesList from './userpages/ClassesList';
 import StudentsOfClass from './userpages/StudentsOfClass';
 import NowStudentjoined from './userpages/NowStudentjoined';
+import {  useCookies } from 'react-cookie';
+import Context from './context/Context';
 const App = () => {
-  const [ isLogin, setIsLogin] = useState(false)
-  const [ userStatus, setUserStatus] = useState('')
+  const [cookies, setCookie] = useCookies();
+  const  login= useContext(Context)
+  const {userStatus} = login.userLogin
+  useEffect(()=>{
+    if(cookies.userToken){
+      login.setUserLogin({
+        isLogin:cookies.userToken,
+        userStatus:cookies.status
+      })
+    }
+    else{
+      login.setUserLogin({
+        isLogin:'',
+        userStatus:''
+      })
+    }
+  },[])
   return (
     <BrowserRouter>
       <Routes>   
-        <Route element={<UserLoginProtect  isLogin={isLogin}  />}>
-          <Route path={userStatus+'-dashboard'} element={<Dashboard userStatus={userStatus}/>}/>
+        <Route element={<UserLoginProtect   />}>
+          <Route path={userStatus+'-dashboard'} element={<Dashboard />}/>
           <Route path={userStatus+'-reset-password'} element={<RestPassword />}/>
           <Route path={userStatus+'-profile'} element={<Profile />}/>
           <Route path={userStatus+'-setting'} element={<Setting />}/>
@@ -35,17 +52,16 @@ const App = () => {
               </>
             ):
             userStatus=='student'?(
-              <Route path={userStatus+'-friend-list'} element="Friend List"/>
+            <Route path={userStatus+'-friend-list'} element="Friend List"/>
             ):null
           }
           <Route path='*' element={<NotFoundPage />} />
         </Route>
-        <Route element={<UserNotLogin  isLogin={isLogin} userStatus={userStatus} />}>
+        <Route element={<UserNotLogin  />}>
           <Route path='/' element={<Home/>}></Route>
-          <Route path='/login' element={<Login />}></Route>
+          <Route path='/login' element={<Login  />}></Route>
           <Route path='/signup' element={<SignUpPage/>}></Route>
-        </Route>
-        
+        </Route> 
       </Routes>
     </BrowserRouter>
   )

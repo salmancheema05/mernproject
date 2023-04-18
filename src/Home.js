@@ -2,7 +2,7 @@ import React from 'react'
 import { Grid , Box }from '@mui/material'
 import { BgimageStyle } from './StyledComponent'
 import { Link } from "react-router-dom";
-import Navbar from './commoncomponens/Navbar';
+import Navbar from './commoncomponents/Navbar';
 const Home = () => {
   return (
     <>

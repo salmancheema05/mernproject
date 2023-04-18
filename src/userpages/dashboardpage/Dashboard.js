@@ -1,20 +1,23 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import { Grid,Box }from '@mui/material'
 import '../../Groble.css'
-import UserLayout from '../../commoncomponens/UserLayout'
+import UserLayout from '../../commoncomponents/UserLayout'
 import ReduceCapacityIcon from '@mui/icons-material/ReduceCapacity';
 import StudentTable from './components/StudentTable'
 import { Link } from "react-router-dom";
-const Dashboard = ({userStatus}) => {
-    console.log(userStatus+'-total-student')
+import Context from '../../context/Context';
+const Dashboard = () => {
+    const  login= useContext(Context)
+    const {isLogin,userStatus} = login.userLogin
   return (
     <UserLayout>
     {
-    userStatus == 'professor' ?( 
+    userStatus === 'professor' ?( 
         <>
            <Grid  item lg={3} md={6} sm={6} xs={2}>
                 <Link to={'/'+userStatus+'-total-student'}  style={{textDecoration:'none'}} >
                     <Box  className="grobleBgColor" mr={1}  p={2} position="relative">
+        
                         <h4>Total Stduent</h4>
                         <Box component='span' position='absolute' right={15} top={20}><ReduceCapacityIcon /></Box>
                         <h3>30</h3>  
@@ -51,7 +54,7 @@ const Dashboard = ({userStatus}) => {
         <StudentTable />
     </>  
     ):
-    userStatus == 'student'?(
+    userStatus === 'student'?(
         <h1>student compontent</h1>
     ):null
     }

@@ -46,7 +46,7 @@ const StudentTable = () => {
                     </TableRow>
                     <TableRow>
                         <TableCell colSpan={5} align="center">
-                            <a href="">VIEW ALL STUDENT</a> 
+                            <a href="#">VIEW ALL STUDENT</a> 
                         </TableCell>
                     </TableRow>
                    

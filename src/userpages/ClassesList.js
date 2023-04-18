@@ -1,5 +1,5 @@
 import React from 'react'
-import UserLayout from '../commoncomponens/UserLayout'
+import UserLayout from '../commoncomponents/UserLayout'
 function ClassesList() {
     return (
         <UserLayout>

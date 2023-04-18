@@ -1,10 +1,30 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import SearchIcon from '@mui/icons-material/Search';
 import { Avatar, Box  }from '@mui/material'
 import { NavbarBox, Item, DropDownStyle, NotificationDropdownStyled } from './Style'
 import DehazeIcon from '@mui/icons-material/Dehaze';
-const TopNavbar = () => {
+import Context from '../context/Context';
+import {  useCookies } from 'react-cookie';
+import { logoutapi } from '../api/Loginapi';
+ const TopNavbar =   () => {
+    const [cookie, setCookie, removeCookie] = useCookies(['id','firstname','lastname','loginstatus','status','userToken']);
+    const  login= useContext(Context)
+    const logOut =() =>{
+        const data ={"token":cookie.userToken,"status":cookie.status,"id":cookie.id}
+        removeCookie('id')
+        removeCookie('firstname')
+        removeCookie('lastname')
+        removeCookie('loginstatus')
+        removeCookie('status')
+        removeCookie('userToken')
+        login.setUserLogin({
+            isLogin:'',
+            userStatus:''
+          })
+       
+        logoutapi(data)
+    }
   return (
     <>
         <NavbarBox>
@@ -46,7 +66,7 @@ const TopNavbar = () => {
                     <hr />
                     <p>Setting</p>
                     <hr />
-                    <p>Logout</p>   
+                    <p onClick={logOut}>Logout</p>   
                 </DropDownStyle >
             </Item>
         </NavbarBox>

@@ -1,7 +1,10 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import { Navigate,Outlet } from 'react-router-dom'
-function UserNotLogin({isLogin,userStatus}) {
-    if(isLogin==false){
+import Context from '../context/Context'
+function UserNotLogin() {
+    const  login= useContext(Context)
+    const {isLogin,userStatus} = login.userLogin
+    if(isLogin===''){
         return <Outlet/>
     }
     else{
